@@ -6,7 +6,9 @@ const UrlShortener = () => {
   const [shortUrl, setShortUrl] = useState("");
   const [expiresAt, setExpiresAt] = useState(null);
   const [error, setError] = useState("");
-    const baseUrl = "https://shortened-url.onrender.com"
+  const [loading, setLoading] = useState(false); // New loading state
+  const baseUrl = "https://shortened-url.onrender.com";
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!longUrl) {
@@ -14,24 +16,24 @@ const UrlShortener = () => {
       return;
     }
 
+    setLoading(true); // Start loading
     try {
-      const response = await axios.post(`${baseUrl}/api/shorten`, {
-        longUrl,
-      });
+      const response = await axios.post(`${baseUrl}/api/shorten`, { longUrl });
       setShortUrl(`${baseUrl}/api/${response.data.shortUrl}`);
-      setExpiresAt(new Date(response.data.expiresAt)); // Convert to Date object
+      setExpiresAt(new Date(response.data.expiresAt));
       setError("");
     } catch (err) {
       setError("Failed to shorten the URL. Please try again.");
       console.error(err);
+    } finally {
+      setLoading(false); // Stop loading after request completes
     }
   };
 
-  // Format the expiration date as DD/MM/YYYY
   const formatDate = (date) => {
     if (!date) return "";
     const day = String(date.getDate()).padStart(2, "0");
-    const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are 0-indexed
+    const month = String(date.getMonth() + 1).padStart(2, "0");
     const year = date.getFullYear();
     return `${day}/${month}/${year}`;
   };
@@ -47,9 +49,7 @@ const UrlShortener = () => {
           </div>
 
           <header className="text-center text-xl font-extrabold text-gray-600">
-            {expiresAt && (
-              <p>Link expires on: {formatDate(expiresAt)}</p>
-            )}
+            {expiresAt && <p>Link expires on: {formatDate(expiresAt)}</p>}
           </header>
 
           <div>
@@ -69,6 +69,7 @@ const UrlShortener = () => {
                 placeholder="Enter long URL"
                 value={longUrl}
                 onChange={(e) => setLongUrl(e.target.value)}
+                disabled={loading} // Disable input during loading
               />
               {error && (
                 <p className="text-red-500 text-sm text-center mb-4">{error}</p>
@@ -76,8 +77,9 @@ const UrlShortener = () => {
               <button
                 className="flex items-baseline rounded-lg bg-[#FE5401] px-4 py-2.5 text-xl font-bold text-white hover:bg-[#FF7308] hover:cursor-pointer"
                 type="submit"
+                disabled={loading} // Disable button during loading
               >
-                <span>Get your link</span>
+                {loading ? "Loading..." : "Get your link"} {/* Button text */}
               </button>
             </form>
 
