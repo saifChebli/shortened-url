@@ -41,7 +41,7 @@ const UrlShortener = () => {
       <main className="grid min-h-screen w-full place-items-center bg-gray-900">
         <div className="absolute left-1/2 top-1/2 h-96 w-80 -translate-x-1/2 -translate-y-1/2 rounded-2xl bg-gray-400"></div>
 
-        <div className="absolute left-1/2 top-1/2 h-fit w-80 -translate-x-1/2 -translate-y-1/2 space-y-6 rounded-2xl bg-gray-100 p-6 transition duration-300">
+        <div className="absolute m-4 left-1/2 top-1/2 h-fit w-80 -translate-x-1/2 -translate-y-1/2 space-y-6 rounded-2xl bg-gray-100 p-6 transition duration-300">
           <div className="flex justify-end">
             <div className="h-4 w-4 rounded-full bg-gray-900"></div>
           </div>
@@ -82,7 +82,7 @@ const UrlShortener = () => {
             </form>
 
             {shortUrl && (
-              <div className="my-4 text-center">
+              <div className="my-2 text-center">
                 <p className="font-bold">Shortened URL:</p>
                 <a
                   href={shortUrl}
