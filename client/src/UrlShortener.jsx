@@ -6,7 +6,7 @@ const UrlShortener = () => {
   const [shortUrl, setShortUrl] = useState("");
   const [expiresAt, setExpiresAt] = useState(null);
   const [error, setError] = useState("");
-    const baseUrl = "https://shortened-url.vercel.app/"
+    const baseUrl = "https://shortened-url.onrender.com"
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!longUrl) {
