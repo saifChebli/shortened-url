@@ -15,6 +15,10 @@ app.use('/api', urlRoutes);
 
 let server;
 
+app.get('/api', (req, res) => {
+    res.send('Hello from Shortener URL API!');
+  });
+
 // Start the server only if not in test mode
 if (process.env.NODE_ENV !== 'test') {
   connectDB().then(() => {

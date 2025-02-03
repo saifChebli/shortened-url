@@ -6,7 +6,7 @@ const UrlShortener = () => {
   const [shortUrl, setShortUrl] = useState("");
   const [expiresAt, setExpiresAt] = useState(null);
   const [error, setError] = useState("");
-
+    const baseUrl = "https://shortened-url.vercel.app/"
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!longUrl) {
@@ -15,10 +15,10 @@ const UrlShortener = () => {
     }
 
     try {
-      const response = await axios.post("http://localhost:5000/api/shorten", {
+      const response = await axios.post(`${baseUrl}/api/shorten`, {
         longUrl,
       });
-      setShortUrl(`http://localhost:5000/api/${response.data.shortUrl}`);
+      setShortUrl(`${baseUrl}/api/${response.data.shortUrl}`);
       setExpiresAt(new Date(response.data.expiresAt)); // Convert to Date object
       setError("");
     } catch (err) {
